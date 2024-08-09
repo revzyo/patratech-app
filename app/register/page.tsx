@@ -80,10 +80,13 @@ import { useState, FormEvent } from "react"
                         <input type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)}
                         required
                         className="border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-600 border-gray-500 placeholder-gray-400 text-white" />
-
-                            
                         </div>
                     </div>
+                    {error && <p className="text-red-500 text-sm"> {error} </p>}
+                    {message && <p className="text-green-500 text-sm"> {message} </p>}
+                    <button type="submit">
+                       
+                    </button>
                 </form>
             </div>
         </div>
