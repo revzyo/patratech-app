@@ -104,6 +104,37 @@ import { useState, FormEvent } from "react"
                         </select>
                     </div>
 
+                    <div>
+                        <label htmlFor="email" className="text-sm font-medium block mb-2 text-gray-300">
+                            Email
+                        </label>
+                        <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-600 border-gray-500 placeholder-gray-400 text-white" />
+                    </div>
+
+                    <div className="flex space-x-4">
+                        <div className="w-1/2">
+                        <label htmlFor="password" className="text-sm font-medium block mb-2 text-gray-300">
+                            Password
+                        </label>
+                        <input type="text" id="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                        required
+                        className="border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-600 border-gray-500 placeholder-gray-400 text-white" />
+                        </div>
+
+                        <div className="w-1/2">
+                        <label htmlFor="confirmpassword" className="text-sm font-medium block mb-2 text-gray-300">
+                            Confirm Password
+                        </label>
+                        <input type="text" id="confirmpassword" value={confirmPassword} onChange={(e) => setconfirmPassword(e.target.value)}
+                        required
+                        className="border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-600 border-gray-500 placeholder-gray-400 text-white" />
+                        </div>
+                    </div>
+
+                    
+
 
 
                     {error && <p className="text-red-500 text-sm"> {error} </p>}

@@ -1,9 +1,60 @@
-import Image from "next/image";
+"use client";
+import {useEffect, useState} from "react";
+import { useRouter } from "next/navigation";
+import {onAuthStateChanged} from "firebase/auth";
+import {auth, firestore} from "@/firebase/firebase";
+import {doc, getDoc, setDoc} from "firebase/firestore";
+import type {User} from "firebase/auth";
 
-export default function Home() {
+const HomePage = () => {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        if (user.emailVerified){
+          const userDoc = await getDoc(doc(firestore, "users", user.uid));
+          if (!userDoc.exists()){
+            const registrationData = localStorage.getItem("registrationData");
+            const{
+              firstName = "",
+              lastName = "",
+              gender = "",
+            } = registrationData ? JSON.parse(registrationData) : {};
+
+            await setDoc(doc(firestore, "users", user.uid), {
+              firstName,
+              lastName,
+              gender,
+              email: user.email,
+            });
+            localStorage.removeItem("registartionData");
+          }
+          setUser(user);
+          router.push("/dashboard");
+        } else{
+          setUser(null);
+          router.push("/login");
+        }
+      } 
+      else{
+        setUser(null);
+        router.push("/login");
+      }
+      setLoading(false);
+    });
+    return() => unsubscribe();
+  }, [router]);
+
+  if (loading){
+    return <p>Loading...</p>
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>HELLO</h1>
-    </main>
+    <div>
+      {user ? "Redirecting to dashboard..." : "Redirecting to login..."}
+    </div>
   );
-}
+};
