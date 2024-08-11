@@ -13,8 +13,8 @@ const LoginPage = () => {
 
     const handleLogin = async (event:React.FormEvent) => {
         event.preventDefault();
-        setError(null);
-        
+        setError(null); 
+
         try{
             const userCredential = await signInWithEmailAndPassword(
                 auth,
